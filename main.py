@@ -2,8 +2,6 @@
 #
 # 2019 andreas.helfenstein@hotmail.ch
 
-
-
 import signal
 import sys
 import asyncio
@@ -27,7 +25,8 @@ def strip_html_tags(raw_text):
     """
     soup = BeautifulSoup(raw_text, "html.parser")
     for tag in [soup.script, soup.style]:
-        tag.decompose()
+        if tag is not None:
+            tag.decompose()
     text = soup.get_text()
     return text
 
@@ -60,7 +59,7 @@ async def match_regex(client, url, regex, writer):
     except (ValueError, TypeError) as e:
         error = e
     stop = time.time()
-    elapsed = stop - start   
+    elapsed = stop - start
     if first_match is not None:
         match_beginning, match_end = first_match.span()
     data = [
@@ -137,11 +136,8 @@ def main(urllist, max_coros=10):
 
 
 if __name__ == '__main__':
-    urllist = [['https://www.hs.fi', 'Helsinki'], 
-        ['https://www.is.fi', 'koti'],
-        ['www.unknown_url.xy', 'example'],
-        [56, 'example'],
-        [None, 'example'],
-        ['http://www.cgi.fi/error_code', 'example']
-    ]
+    urllist = [['https://www.hs.fi',
+                'Helsinki'], ['https://www.is.fi', 'koti'],
+               ['www.unknown_url.xy', 'example'], [56, 'example'],
+               [None, 'example'], ['http://www.cgi.fi/error_code', 'example']]
     main(urllist)
