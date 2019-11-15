@@ -53,7 +53,7 @@ expressions and write the result into a file (output.csv).
 **Example:**
 
 ```
-main([['www.hs.fi', 'Helsinki'],['www.is.fi', '"^Foo.*bar$"']])
+main([['https://www.hs.fi', 'Helsinki'],['https://www.is.fi', '"^Foo.*bar$"']])
 ```
 
 **Remarks:**
